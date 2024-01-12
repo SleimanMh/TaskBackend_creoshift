@@ -16,4 +16,10 @@ class Flight extends Model
         'departure_time', 
         'arrival_time',
     ];
+
+    /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
+    public function passengers()
+    {
+        return $this->hasMany(Passenger::class,'flight_id');
+    }
 }

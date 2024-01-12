@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Flight;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class PassengerFactory extends Factory
     public function definition(): array
     {
         return [
+            'flight_id' => Flight::factory(),
             'FirstName' => $this->faker->name(),
             'LastName' => $this->faker->name(),
             'email' => $this->faker->email(),

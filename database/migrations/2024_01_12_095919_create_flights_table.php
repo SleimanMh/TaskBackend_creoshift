@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             // $table->assert('departure_time', '<', $table->raw('arrival_time'));
+            // $table->foreignId('flight_id')->constrained()->onDelete('cascade');
         });
     }
 
