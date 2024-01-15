@@ -19,8 +19,8 @@ class PassengerFactory extends Factory
     {
         return [
             'flight_id' => Flight::factory(),
-            'FirstName' => $this->faker->name(),
-            'LastName' => $this->faker->name(),
+            'FirstName' => $this->faker->firstName(),
+            'LastName' => $this->faker->lastName(),
             'email' => $this->faker->email(),
             'password' => bcrypt('password'),
             'DOB' => $this->faker->date(),

@@ -9,7 +9,7 @@ class PassengerController extends Controller
 {
     //
     public function index(){
-        return view('welcome',[
+        return view('passengers.index',[
             'passengers'=>Passenger::latest()->filter((request(['FirstName'])))->paginate()
         ]);
     }

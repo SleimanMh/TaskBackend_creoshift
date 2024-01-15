@@ -17,9 +17,18 @@ class Flight extends Model
         'arrival_time',
     ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['number'] ?? false) {
+            $query->where('number', 'like', '%' . $filters['number'] . '%');
+        }
+    }
+    
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function passengers()
     {
         return $this->hasMany(Passenger::class,'flight_id');
     }
+
+   
 }

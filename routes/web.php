@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FlightController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PassengerController;
 
@@ -17,4 +18,6 @@ use App\Http\Controllers\PassengerController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/users', [PassengerController::class, 'index']);
+Route::get('/passengers', [PassengerController::class, 'index']);
+
+Route::get('/flights', [FlightController::class, 'index']);
