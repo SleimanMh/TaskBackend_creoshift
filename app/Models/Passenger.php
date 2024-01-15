@@ -21,10 +21,18 @@ class Passenger extends Model
         'flight_id',
     ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['FirstName'] ?? false) {
+            $query->where('FirstName', 'like', '%' . $filters['FirstName'] . '%');
+        }
+    }
+
+
     /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function flight()
     {
-        return $this->belongsTo(Flight::class,'flight_id');
+        return $this->belongsTo(Flight::class, 'flight_id');
     }
 }
