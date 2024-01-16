@@ -16,8 +16,10 @@ use App\Http\Controllers\PassengerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('passengers.index');
 });
 Route::get('/passengers', [PassengerController::class, 'index']);
 
 Route::get('/flights', [FlightController::class, 'index']);
+
+Route::get('/flights/{flight}/passengers', [FlightController::class,'showPassengers'])->name('flights.showPassengers');

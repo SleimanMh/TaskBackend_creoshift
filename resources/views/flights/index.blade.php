@@ -15,6 +15,7 @@
     <li>Arrival City: {{ $flight->arrival_city }}</li>
     <li>Departure Time: {{ $flight->departure_time }}</li>
     <li>Arrival Time: {{ $flight->arrival_time ?? 'Not available' }}</li>
+    <a href="{{ route('flights.showPassengers', ['flight' => $flight->id]) }}">Show Passengers</a>
 </ul>
 @endforeach
 

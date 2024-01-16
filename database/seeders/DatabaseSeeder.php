@@ -22,6 +22,6 @@ class DatabaseSeeder extends Seeder
         // ]);
         Flight::factory(50)->create();
         
-        Passenger::factory(50)->create();
+        Passenger::factory(100)->create();
     }
 }
