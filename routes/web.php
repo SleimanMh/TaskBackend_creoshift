@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\FlightController;
+use App\Http\Controllers\Api\FlightController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PassengerController;
+use App\Http\Controllers\Api\PassengerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +14,3 @@ use App\Http\Controllers\PassengerController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('passengers.index');
-});
-Route::get('/passengers', [PassengerController::class, 'index']);
-
-Route::get('/flights', [FlightController::class, 'index']);
-
-Route::get('/flights/{flight}/passengers', [FlightController::class,'showPassengers'])->name('flights.showPassengers');

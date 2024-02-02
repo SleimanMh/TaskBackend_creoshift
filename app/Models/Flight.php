@@ -8,15 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Flight extends Model
 {
     use HasFactory;
+    // app/Models/Flight.php
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $fillable = [
-        'number', 
-        'departure_city',
-        'arrival_city', 
-        'departure_time', 
-        'arrival_time',
-    ];
-
+    
     public function scopeFilter($query, array $filters)
     {
         if ($filters['number'] ?? false) {
@@ -27,8 +22,6 @@ class Flight extends Model
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function passengers()
     {
-        return $this->hasMany(Passenger::class,'flight_id');
+        return $this->belongsToMany(Passenger::class);
     }
-
-   
 }

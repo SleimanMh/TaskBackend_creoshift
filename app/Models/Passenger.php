@@ -8,31 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Passenger extends Model
 {
     use HasFactory;
+// app/Models/Passenger.php
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = [
-        'FirstName',
-        'LastName',
-        'email',
-        'password',
-        'DOB',
-        'passport_expiry_date',
-        'flight_id',
-    ];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function scopeFilter($query, array $filters)
     {
         if ($filters['FirstName'] ?? false) {
-            $query->where('FirstName', 'like', '%' . $filters['FirstName'] . '%');
+            $query->where('FirstName', 'like', '%' . request('FirstName') . '%');
         }
     }
 
-
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function flight()
+    public function flights()
     {
-        return $this->belongsTo(Flight::class, 'flight_id');
+        return $this->belongsToMany(Flight::class);
     }
 }

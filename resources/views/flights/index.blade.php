@@ -1,4 +1,4 @@
-<form action="/flights" method="GET">
+{{-- <form action="/flights" method="GET">
     <label for="filterNumber">Filter by Flight Number:</label>
     <input type="text" name="number">
     <button type="submit">Apply Filter</button>
@@ -18,4 +18,4 @@
     <a href="{{ route('flights.showPassengers', ['flight' => $flight->id]) }}">Show Passengers</a>
 </ul>
 @endforeach
-
+ --}}

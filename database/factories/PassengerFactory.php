@@ -18,7 +18,6 @@ class PassengerFactory extends Factory
     public function definition(): array
     {
         return [
-            'flight_id' => Flight::factory(),
             'FirstName' => $this->faker->firstName(),
             'LastName' => $this->faker->lastName(),
             'email' => $this->faker->email(),

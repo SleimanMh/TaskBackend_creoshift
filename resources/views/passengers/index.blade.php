@@ -1,4 +1,4 @@
-<form action="/passengers" method="GET">
+{{-- <form action="/passengers/{FirstName}" method="GET">
     <label for="filterFirstName">Filter by First Name:</label>
     <input type="text" name="FirstName">
     <button type="submit">Apply Filter</button>
@@ -14,4 +14,4 @@
     <li>Last Name: {{ $passenger->LastName }}</li>
 </ul>
 @endforeach
-
+ --}}
