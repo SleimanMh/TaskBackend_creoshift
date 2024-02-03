@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $flights=Flight::factory(50)->create();
         
-        $passengers =Passenger::factory(100)->create();
+        $passengers =Passenger::factory(1000)->create();
 
         $flights->each(function ($flight) use ($passengers) {
             $flight->passengers()->attach($passengers->random(3)->pluck('id'));

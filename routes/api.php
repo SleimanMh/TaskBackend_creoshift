@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FlightController;
 use App\Http\Controllers\Api\PassengerController;
-
+use App\Http\Controllers\Api\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
 Route::get('/passengers', [PassengerController::class, 'index']);
 Route::get('/passengers/{id}', [PassengerController::class, 'show']);
 Route::post('/passengers', [PassengerController::class, 'store']);
@@ -27,4 +31,3 @@ Route::put('/passengers/{id}', [PassengerController::class, 'update']);
 Route::delete('/passengers/{id}', [PassengerController::class, 'destroy']);
 Route::get('/flights', [FlightController::class, 'index']);
 Route::get('/flights/{flightId}/passengers', [FlightController::class, 'showPassengers']);
-
