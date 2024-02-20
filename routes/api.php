@@ -2,32 +2,33 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FlightController;
 use App\Http\Controllers\Api\PassengerController;
-use App\Http\Controllers\Api\AuthController;
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::middleware(['auth:sanctum', AdminMiddleware::class])->group(function () {
+    // Routes that require admin role
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/admin/dashboard', function () {
+        return response()->json(['message' => 'Admin dashboard']); // Adjust as needed
+    });
 });
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+    Route::get('/passengers', [PassengerController::class, 'index']);
+    Route::get('/passengers/{passenger}', [PassengerController::class, 'show']);
+    Route::post('/passengers', [PassengerController::class, 'store']);
+    Route::put('/passengers/{passenger}', [PassengerController::class, 'update']);
+    Route::delete('/passengers/{passenger}', [PassengerController::class, 'destroy']);
+});
 
-Route::get('/passengers', [PassengerController::class, 'index']);
-Route::get('/passengers/{id}', [PassengerController::class, 'show']);
-Route::post('/passengers', [PassengerController::class, 'store']);
-Route::put('/passengers/{id}', [PassengerController::class, 'update']);
-Route::delete('/passengers/{id}', [PassengerController::class, 'destroy']);
-Route::get('/flights', [FlightController::class, 'index']);
-Route::get('/flights/{flightId}/passengers', [FlightController::class, 'showPassengers']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::get('/flights', [FlightController::class, 'index']);
+    Route::get('/flights/{flightId}/passengers', [FlightController::class, 'show']);

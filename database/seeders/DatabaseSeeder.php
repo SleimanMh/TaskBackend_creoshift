@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use App\Models\Flight;
 use App\Models\Passenger;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,21 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => '123456',
+            'role' => 'admin',
+        ]);
+
+        // Create a regular user
+        User::create([
+            'name' => 'Regular User',
+            'email' => 'user@example.com',
+            'password' => '123456',
+            'role' => 'user',
+        ]);
+        
         $flights=Flight::factory(50)->create();
         
         $passengers =Passenger::factory(1000)->create();

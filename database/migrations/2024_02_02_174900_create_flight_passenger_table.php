@@ -13,13 +13,13 @@ return new class extends Migration
     {
     Schema::create('flight_passenger', function (Blueprint $table) {
         $table->id();
-        $table->unsignedBigInteger('flight_id');
-        $table->unsignedBigInteger('passenger_id');
+        $table->foreignId('flight_id');
+        $table->foreignId('passenger_id');
         $table->timestamps();
-
-        $table->foreign('flight_id')->references('id')->on('flights')->onDelete('cascade');
-        $table->foreign('passenger_id')->references('id')->on('passengers')->onDelete('cascade');
-
+        $table->dropSoftDeletes();
+        $table->foreignId('flight_id')->constrained('flights')->onDelete('cascade');
+        $table->foreignId('passenger_id')->constrained('passengers')->onDelete('cascade');
+            
         $table->unique(['flight_id', 'passenger_id']);
     });
     }

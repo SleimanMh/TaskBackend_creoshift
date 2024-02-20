@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Flight;
-use Illuminate\Http\Request;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 use App\Http\Controllers\Controller;
 
 class FlightController extends Controller
@@ -11,11 +12,18 @@ class FlightController extends Controller
     //
     public function index()
     {
-        return response()->json(Flight::latest()->filter((request(['number'])))->paginate());
+        $flights = QueryBuilder::for(Flight::class)
+            ->allowedFilters([
+                AllowedFilter::partial('number'),
+            ])
+            ->allowedSorts(['number', 'created_at'])
+            ->paginate();
+    
+        return response()->json($flights);
     }
 
-    public function showPassengers($flightId)
+    public function show(Flight $flight)
     {
-        return response()->json(Flight::findOrFail($flightId)->passengers);
+        return response()->json($flight);
     }
 }

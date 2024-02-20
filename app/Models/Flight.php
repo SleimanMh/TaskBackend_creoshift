@@ -9,16 +9,8 @@ class Flight extends Model
 {
     use HasFactory;
     // app/Models/Flight.php
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $guarded = [];
 
-    
-    public function scopeFilter($query, array $filters)
-    {
-        if ($filters['number'] ?? false) {
-            $query->where('number', 'like', '%' . $filters['number'] . '%');
-        }
-    }
-    
     /** @return \Illuminate\Database\Eloquent\Relations\HasMany */
     public function passengers()
     {

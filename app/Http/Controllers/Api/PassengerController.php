@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Passenger;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,13 +12,19 @@ class PassengerController extends Controller
 {
     public function index()
     {
-        $passengers = Passenger::latest()->filter(request(['FirstName', 'LastName']))->paginate();
+        $passengers = QueryBuilder::for(Passenger::class)
+            ->allowedFilters([
+                AllowedFilter::partial('FirstName'),
+                AllowedFilter::partial('LastName'),
+            ])
+            ->allowedSorts(['FirstName', 'LastName', 'created_at'])
+            ->paginate();
+    
         return response()->json($passengers);
     }
 
-    public function show($id)
+    public function show(Passenger $passenger)
     {
-        $passenger = Passenger::findOrFail($id);
         return response()->json($passenger);
     }
 
@@ -35,12 +43,11 @@ class PassengerController extends Controller
         $passenger = Passenger::create($request->all());
         $passenger->flights()->sync($request->input('flight_ids', []));
 
-        return response()->json(['message' => 'Passenger created successfully', 'data' => $passenger]);
+        return response()(['success' => true, 'data' => $passenger]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,Passenger $passenger)
     {
-        $passenger = Passenger::findOrFail($id);
 
         $request->validate([
             'FirstName' => 'required|string|max:255',
@@ -55,15 +62,14 @@ class PassengerController extends Controller
         $passenger->update($request->all());
         $passenger->flights()->sync($request->input('flight_ids', []));
 
-        return response()->json(['message' => 'Passenger updated successfully', 'data' => $passenger]);
+        return response()->json(['success' => true, 'data' => $passenger]);
     }
 
-    public function destroy($id)
+    public function destroy(Passenger $passenger)
     {
-        $passenger = Passenger::findOrFail($id);
         $passenger->flights()->detach(); 
         $passenger->delete();
 
-        return response()->json(['message' => 'Passenger deleted successfully']);
+        return response()->json(['success' => true]);
     }
 }
