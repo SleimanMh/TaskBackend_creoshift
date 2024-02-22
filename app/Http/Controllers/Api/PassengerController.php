@@ -18,11 +18,12 @@ class PassengerController extends Controller
                 'FirstName',
                 'LastName'
             ])
+            ->allowedIncludes('flights')
             ->allowedSorts(['FirstName', 'LastName', 'created_at'])
             ->paginate(request()->input('per_page', 10));
     
         return response(['success' => true, 'data' => $passengers]);
-        }
+    }
 
     public function show(Passenger $passenger)
     {
@@ -44,7 +45,7 @@ class PassengerController extends Controller
         $passenger = Passenger::create($request->all());
         $passenger->flights()->sync($request->input('flight_ids', []));
 
-        return response()(['success' => true, 'data' => $passenger]);
+        return response(['success' => true, 'data' => $passenger]);
     }
 
     public function update(Request $request,Passenger $passenger)
@@ -63,7 +64,7 @@ class PassengerController extends Controller
         $passenger->update($request->all());
         $passenger->flights()->sync($request->input('flight_ids', []));
 
-        return response()->json(['success' => true, 'data' => $passenger]);
+        return response(['success' => true, 'data' => $passenger]);
     }
 
     public function destroy(Passenger $passenger)
@@ -73,4 +74,5 @@ class PassengerController extends Controller
 
         return response()->json(['success' => true]);
     }
+
 }

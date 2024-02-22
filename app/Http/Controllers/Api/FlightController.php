@@ -17,6 +17,7 @@ class FlightController extends Controller
             ->allowedFilters([
                 AllowedFilter::partial('number'),
             ])
+            ->allowedIncludes('passengers')
             ->allowedSorts(['number', 'created_at'])
             ->paginate(request()->input('per_page', 10));
     
@@ -40,9 +41,9 @@ class FlightController extends Controller
 
         $flight = Flight::create($request->all());
 
-        return response()(['success' => true, 'data' => $flight]);
+        return response(['success' => true, 'data' => $flight]);
     }
-    
+
     public function update(Request $request, Flight $flight)
     {
         $request->validate([
@@ -55,13 +56,20 @@ class FlightController extends Controller
 
         $flight->update($request->all());
 
-        return response()->json(['success' => true, 'data' => $flight]);
+        return response(['success' => true, 'data' => $flight]);
     }
     public function destroy(Flight $flight)
     {
         $flight->delete();
 
-        return response()->json(['success' => true]);
+        return response(['success' => true]);
     }
 
+    public function showPassengers(Flight $flight)
+    {
+        return response(['success'=>true,
+            'flight' => $flight,
+            'passengers' => $flight->passengers,
+        ]);
+    }
 }
