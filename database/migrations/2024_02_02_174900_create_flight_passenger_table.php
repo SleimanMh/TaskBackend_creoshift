@@ -13,8 +13,6 @@ return new class extends Migration
     {
     Schema::create('flight_passenger', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('flight_id');
-        $table->foreignId('passenger_id');
         $table->timestamps();
         $table->dropSoftDeletes();
         $table->foreignId('flight_id')->constrained('flights')->onDelete('cascade');

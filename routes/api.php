@@ -22,9 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/passengers', [PassengerController::class, 'index']);
     Route::get('/passengers/{passenger}', [PassengerController::class, 'show']);
-    Route::post('/passengers', [PassengerController::class, 'store']);
-    Route::put('/passengers/{passenger}', [PassengerController::class, 'update']);
-    Route::delete('/passengers/{passenger}', [PassengerController::class, 'destroy']);
+    Route::apiResource('/passengers', PassengerController::class);
 });
 
     Route::post('/register', [AuthController::class, 'register']);

@@ -14,18 +14,19 @@ class PassengerController extends Controller
     {
         $passengers = QueryBuilder::for(Passenger::class)
             ->allowedFilters([
-                AllowedFilter::partial('FirstName'),
-                AllowedFilter::partial('LastName'),
+                AllowedFilter::exact('id'),
+                'FirstName',
+                'LastName'
             ])
             ->allowedSorts(['FirstName', 'LastName', 'created_at'])
-            ->paginate();
+            ->paginate(request()->input('per_page', 10));
     
-        return response()->json($passengers);
-    }
+        return response(['success' => true, 'data' => $passengers]);
+        }
 
     public function show(Passenger $passenger)
     {
-        return response()->json($passenger);
+        return response(['success' => true, 'data' => $passenger]);
     }
 
     public function store(Request $request)
