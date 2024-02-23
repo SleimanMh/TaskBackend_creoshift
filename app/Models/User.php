@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     protected $dates = ['deleted_at'];
     
@@ -21,11 +22,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $guarded = [];
-    
-    public function hasRole($role)
-    {
-        return $this->role === $role; 
-    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,15 +42,5 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class);
-    }
 
 }

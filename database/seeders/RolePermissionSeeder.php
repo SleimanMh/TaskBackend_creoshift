@@ -18,7 +18,6 @@ class RolePermissionSeeder extends Seeder
         //
         $roleAdmin = Role::create(['name' => 'admin']);
         $roleUser = Role::create(['name' => 'user']);
-
         
         $permissions = [
             'model create',
@@ -31,7 +30,6 @@ class RolePermissionSeeder extends Seeder
             Permission::create(['name' => $permission]);
         }
 
-        // Assign permissions to roles
         $roleAdmin->givePermissionTo(Permission::all());
     }
 }

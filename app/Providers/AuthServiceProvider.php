@@ -19,13 +19,11 @@ class AuthServiceProvider extends ServiceProvider
     protected $middlewareGroups = [
         'web' => [
             // ... other middlewares
-            \App\Http\Middleware\AdminMiddleware::class,
         ],
     
         'api' => [
             'throttle:api',
             'bindings',
-            \App\Http\Middleware\AdminMiddleware::class,
         ],
     ];
     

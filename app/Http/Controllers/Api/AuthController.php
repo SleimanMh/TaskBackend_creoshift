@@ -21,16 +21,16 @@ class AuthController extends Controller
             
             $token = $user->createToken('auth-token', ['read']);
 
-            return response()->json(['token' => $token->plainTextToken, 'user' => $user]);
+            return response()->json(['success'=>true,'token' => $token->plainTextToken, 'user' => $user]);
         }
     
-        return response()->json(['message' => 'Invalid Credentials'], 401);
+        return response()->json(['success' => false], 401);
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Logged out successfully']);
+        return response()->json(['success' => true]);
     }
 }

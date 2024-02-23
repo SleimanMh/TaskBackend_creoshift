@@ -3,8 +3,6 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class Kernel extends HttpKernel
 {
@@ -40,7 +38,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             'auth:sanctum',
-            \App\Http\Middleware\AdminMiddleware::class,
         ],
 
         'api' => [
@@ -69,6 +66,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'auth' => \App\Http\Middleware\Authenticate::class,
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
     ];
 }
