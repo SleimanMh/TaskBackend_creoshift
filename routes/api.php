@@ -22,15 +22,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
-    Route::get('/passengers', [PassengerController::class, 'index']);
-    Route::get('/passengers/{passenger}', [PassengerController::class, 'show']);
-    Route::apiResource('/passengers', PassengerController::class)->except(['index','show']);
+    Route::apiResource('/passengers', PassengerController::class);
 
-    Route::get('/flights', [FlightController::class, 'index']);
-    Route::get('/flights/{flight}', [FlightController::class, 'show']);
-    Route::post('/flights', [FlightController::class, 'store']);
-    Route::post('/flights/{flight}', [FlightController::class, 'update']);
-    Route::delete('/flights/{flight}', [FlightController::class, 'destroy']);
+    Route::apiResource('/flights', FlightController::class);
 });
 
     
