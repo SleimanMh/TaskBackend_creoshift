@@ -21,9 +21,7 @@ return new class extends Migration
             $table->timestamp('departure_time');
             $table->timestamp('arrival_time')->nullable();
             $table->timestamps();
-            $table->dropSoftDeletes();  
-            // $table->assert('departure_time', '<', $table->raw('arrival_time'));
-            // $table->foreignId('flight_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();  
         });
     }
 

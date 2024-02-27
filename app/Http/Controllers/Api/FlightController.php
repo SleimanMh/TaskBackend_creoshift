@@ -7,6 +7,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class FlightController extends Controller
 {
@@ -15,9 +16,9 @@ class FlightController extends Controller
     {
         $flights = QueryBuilder::for(Flight::class)
             ->allowedFilters([
-                AllowedFilter::partial('number'),
+                AllowedFilter::exact('number'),
+                'passengers.id'
             ])
-            ->allowedIncludes('passengers')
             ->allowedSorts(['number', 'created_at'])
             ->paginate(request()->input('per_page', 10));
     
@@ -62,14 +63,7 @@ class FlightController extends Controller
     {
         $flight->delete();
 
-        return response(['success' => true]);
+        return response(['data' => $flight], Response::HTTP_NO_CONTENT);
     }
 
-    public function showPassengers(Flight $flight)
-    {
-        return response(['success'=>true,
-            'flight' => $flight,
-            'passengers' => $flight->passengers,
-        ]);
-    }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('passport_expiry_date');
             $table->rememberToken();
             $table->timestamps();
-            $table->dropSoftDeletes();
+            $table->softDeletes();
         });
     }
 

@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('flight_passenger', function (Blueprint $table) {
         $table->id();
         $table->timestamps();
-        $table->dropSoftDeletes();
+        $table->softDeletes();
         $table->foreignId('flight_id')->constrained('flights')->onDelete('cascade');
         $table->foreignId('passenger_id')->constrained('passengers')->onDelete('cascade');
             

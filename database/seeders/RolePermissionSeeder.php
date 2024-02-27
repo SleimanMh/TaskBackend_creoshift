@@ -21,7 +21,6 @@ class RolePermissionSeeder extends Seeder
         
         $permissions = [
             'model create',
-            'model read',
             'model update',
             'model delete',
         ];

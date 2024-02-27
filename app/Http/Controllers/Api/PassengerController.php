@@ -3,25 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Passenger;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class PassengerController extends Controller
 {
     public function index()
     {
+        $seconds = 60 * 60; // Cache for 1 hour
+        $users = Cache::remember('passengers', $seconds, function () {
+        return DB::table('passengers')->get();
+        });
+
         $passengers = QueryBuilder::for(Passenger::class)
             ->allowedFilters([
                 AllowedFilter::exact('id'),
                 'FirstName',
-                'LastName'
+                'LastName',
+                AllowedFilter::exact('number'),
+                'flights.id'
             ])
-            ->allowedIncludes('flights')
             ->allowedSorts(['FirstName', 'LastName', 'created_at'])
             ->paginate(request()->input('per_page', 10));
-    
         return response(['success' => true, 'data' => $passengers]);
     }
 
@@ -72,7 +80,7 @@ class PassengerController extends Controller
         $passenger->flights()->detach(); 
         $passenger->delete();
 
-        return response()->json(['success' => true]);
+        return response(['data' => $passenger], Response::HTTP_NO_CONTENT);
     }
 
 }
